@@ -1,6 +1,6 @@
 # Api Platform
 
-## installation du site 
+## Installation du site 
 
 ```symfony new api-2026 --webapp```
 
@@ -8,7 +8,7 @@
 
 ```composer require webapp```
 
-## gestion doctrine
+## Gestion doctrine
 
 ### voir l'état des migrations
 
@@ -28,7 +28,11 @@
 ### Astuce pour supprimer la base de données
 ```php bin/console doctrine:database:drop --force```
 
-## installer fixtures
+## Installer fixtures
 ```composer require orm-fixtures --dev```
 
 ```composer require fakerphp/faker```
+
+## Installer API Platform 
+
+```composer require api```
