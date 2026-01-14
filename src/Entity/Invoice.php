@@ -15,12 +15,23 @@ use ApiPlatform\Metadata\Put;
 use App\Repository\InvoiceRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use App\Controller\InvoiceIncrementionController;
+use ApiPlatform\OpenApi\Model;
 
 #[ORM\Entity(repositoryClass: InvoiceRepository::class)]
 #[ApiResource(
     operations: [
         new Get(),
         new Post(),
+        new Post(
+            uriTemplate: '/invoices/{id}/increment',
+            controller: InvoiceIncrementionController::class,
+            openapi: new Model\Operation(
+                summary: 'Incrémente une facture',
+                description: "Incrémente le chrono d'une facture donnée"
+            ),
+            name: 'Increment'
+        ),
         new GetCollection(),
         new Put(),
         new Patch(),
