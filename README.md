@@ -36,3 +36,47 @@
 ## Installer API Platform 
 
 ```composer require api```
+
+# API Sécurité sur les opérations POST
+
+exemple dans src/Entity/User.php
+
+Empecher directement l'inscription si on n'a pas un rôle admin
+
+```
+    #[ApiResource(
+        operations: [
+            new Post(
+                security: 'is_granted("ROLE_ADMIN")
+            )
+        ]
+    )
+```
+
+Sécuriser l'opération sur la propriété
+```    
+    #[ApiProperty(security: 'is_granted("ROLE_ADMIN")')]
+    private array $roles = [];
+```
+
+### limiter l'écriture uniquement à un groupe (denormalizationContext)
+
+```
+#[ApiResource(
+    normalizationContext: ['groups' => ['users_read']],
+    denormalizationContext: ['groups' => ['users_write']]
+)]
+#[UniqueEntity(fields:['email'], message: 'Un utilisateur ayant cette adresse E-mail existe déjà')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
+{
+```
+
+on autorise l'écriture avec le groupe users_write
+
+```
+#[ORM\Column(length: 255)]
+    #[Groups(['users_read','users_write'])]
+    #[Assert\NotBlank(message: "Le prénom est obligatoire")]
+    private ?string $firstName = null;
+```
+
