@@ -9,24 +9,30 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['users_read']],
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['users_read','customers_read','invoices_read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Groups(['users_read','customers_read','invoices_read'])]
     private ?string $email = null;
 
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
+    #[Groups(['users_read','customers_read'])]
     private array $roles = [];
 
     /**
@@ -36,15 +42,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['users_read','customers_read','invoices_read'])]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['users_read','customers_read','invoices_read'])]
     private ?string $lastName = null;
 
     /**
      * @var Collection<int, Customer>
      */
     #[ORM\OneToMany(targetEntity: Customer::class, mappedBy: 'user')]
+    #[Groups(['users_read'])]
     private Collection $customers;
 
     public function __construct()
