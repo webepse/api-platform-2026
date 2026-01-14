@@ -50,14 +50,17 @@ class AppFixtures extends Fixture
                 $manager->persist($customer);
 
                 //gestion des factures
-                $invoice = new Invoice();
-                $invoice->setAmount($faker->randomFloat(2, 250, 5000))
-                    ->setSentAt($faker->dateTimeBetween('-6 months'))
-                    ->setStatus($faker->randomElement(['SENT', 'PAID','CANCELED']))
-                    ->setCustomer($customer)
-                    ->setChrono($chrono);
-                $chrono++;
-                $manager->persist($invoice);
+                for($i=0; $i<rand(1,5); $i++)
+                {
+                    $invoice = new Invoice();
+                    $invoice->setAmount($faker->randomFloat(2, 250, 5000))
+                        ->setSentAt($faker->dateTimeBetween('-6 months'))
+                        ->setStatus($faker->randomElement(['SENT', 'PAID','CANCELED']))
+                        ->setCustomer($customer)
+                        ->setChrono($chrono);
+                    $chrono++;
+                    $manager->persist($invoice);
+                }
             }
         }
 
