@@ -39,6 +39,9 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Delete()
     ],
     normalizationContext: ['groups' => ['invoices_read']],
+    denormalizationContext:[
+        "disable_type_enforcement" => true
+    ],
     order: ['amount' => 'ASC'],
     paginationEnabled: true,
     paginationItemsPerPage: 10,
@@ -64,13 +67,16 @@ class Invoice
     #[Groups(['invoices_read','customers_read', 'invoices_subresource'])]
     #[Assert\NotBlank(message: "Le montant est obligatoire")]
     #[Assert\Type(type: "numeric", message: "Le montant de la facture doit être au format numérique")]
-    private ?float $amount = null;
+    private $amount = null;
 
     #[ORM\Column]
     #[Groups(['invoices_read','customers_read', 'invoices_subresource'])]
     #[Assert\NotBlank(message: "La date de la facture est obligatoire")]
-    #[Assert\Type(type:"datetime", message:"La date doit être au format YYYY-MM-DD")]
-    private ?\DateTime $sentAt = null;
+    #[Assert\Regex(
+        pattern: "/^\d{4}-\d{2}-\d{2}$/",
+        message: "La date doit être au format YYYY-MM-DD"
+    )]
+    private $sentAt = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['invoices_read','customers_read', 'invoices_subresource'])]
@@ -88,31 +94,31 @@ class Invoice
     #[Groups(['invoices_read','customers_read', 'invoices_subresource'])]
     #[Assert\NotBlank(message: "Le chrono de la facture est obligatoire")]
     #[Assert\Type(type: "integer", message: "Le chrono de la facture doit être au format numérique")]
-    private ?int $chrono = null;
+    private $chrono = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getAmount(): ?float
+    public function getAmount()
     {
         return $this->amount;
     }
 
-    public function setAmount(float $amount): static
+    public function setAmount($amount): static
     {
         $this->amount = $amount;
 
         return $this;
     }
 
-    public function getSentAt(): ?\DateTime
+    public function getSentAt()
     {
         return $this->sentAt;
     }
 
-    public function setSentAt(\DateTime $sentAt): static
+    public function setSentAt($sentAt): static
     {
         $this->sentAt = $sentAt;
 
@@ -143,12 +149,12 @@ class Invoice
         return $this;
     }
 
-    public function getChrono(): ?int
+    public function getChrono()
     {
         return $this->chrono;
     }
 
-    public function setChrono(int $chrono): static
+    public function setChrono($chrono): static
     {
         $this->chrono = $chrono;
 

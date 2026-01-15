@@ -24,3 +24,6 @@ services:
 
     App\Controller\InvoiceIncrementionController:
         public: true
+
+    App\Serializer\PatchedDateTimeNormalizer:
+        tags: [serializer.normalizer] 
