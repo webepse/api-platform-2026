@@ -39,7 +39,7 @@ class InvoiceChronoSubscriber implements EventSubscriberInterface
             $invoice->setChrono($nextChrono);
             if(empty($invoice->getSentAt()))
             {
-                $invoice->setSentAt(new \DateTime()->format('Y-m-d'));
+                $invoice->setSentAt((new \DateTime())->format('Y-m-d'));
             }
         }
     }

@@ -26,12 +26,12 @@ services:
         public: true
 
     App\Serializer\PatchedDateTimeNormalizer:
-        tags: [serializer.normalizer] 
-    
+        tags: [serializer.normalizer]
+
     App\Events\JwtCreatedSubscriber:
-    tags:
-        - {
-            name: kernel.event_listener,
-            event: lexik_jwt_authentication.on_jwt_created,
-            method: updateJwtData
-        }
+        tags:
+            - {
+                name: kernel.event_listener,
+                event: lexik_jwt_authentication.on_jwt_created,
+                method: updateJwtData
+            }
