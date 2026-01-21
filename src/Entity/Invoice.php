@@ -43,7 +43,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         "disable_type_enforcement" => true
     ],
     order: ['amount' => 'ASC'],
-    paginationEnabled: true,
+    paginationEnabled: false,
     paginationItemsPerPage: 10,
 )]
 #[ApiResource(

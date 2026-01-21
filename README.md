@@ -80,3 +80,49 @@ on autorise l'écriture avec le groupe users_write
     private ?string $firstName = null;
 ```
 
+# Activer sodium dans php.ini
+
+Retrouver le fichier php.ini de votre version de php 
+verifier la version de php 
+```php --version```
+
+## sur Windows
+
+```C:\wamp64\bin\php\votre version\php.ini```
+
+## sur mac
+```/usr/local/bin/php```
+```/opt/homebrew/bin/php```
+
+dans php.ini retirer le ; 
+
+```extension=sodium```
+
+### Installation de lexik/jwt-authentication-bundle
+
+```composer require "lexik/jwt-authentication-bundle"```
+
+### installer openssl (pour les utilisateurs windows)
+
+récuperer le fichier d'installation de openssl sur Moodle
+
+* Installer le dossier décompressé à la racine du disque dur principale (c:\)
+* Aller dans propriétés système - Variables d'environnement
+* Dans variables système - Path - Nouveau ajouter cette route " C:\OpenSSL-Win64\bin " puis OK
+* Toujours dans variables d’environnement cliquer sur nouvelle...
+
+  * Nom de la variable : OPENSSL_CONF
+  * Valeur de la variable : C:\OpenSSL-Win64\bin\openssl.cfg
+
+Pour tester, dans un terminal taper: openssl si le terminal ne répond pas d'erreur et indique OpenSSL> c'est que vous avez bien travaillé sourire
+
+NB/ pour quitter le mode openSSL faites un CTRL + C
+
+## Générer des clés SSL
+
+```php bin/console lexik:jwt:generate-keypair```
+
+Puis suivre procédure d'installation / configuration 
+
+https://symfony.com/bundles/LexikJWTAuthenticationBundle/current/index.html
+
