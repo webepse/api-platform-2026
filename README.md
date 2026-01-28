@@ -126,3 +126,6 @@ Puis suivre procédure d'installation / configuration
 
 https://symfony.com/bundles/LexikJWTAuthenticationBundle/current/index.html
 
+## Pour changer de port au démarrage du serveur
+
+```symfony server:start --port=8081```
