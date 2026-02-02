@@ -42,5 +42,10 @@ class InvoiceChronoSubscriber implements EventSubscriberInterface
                 $invoice->setSentAt((new \DateTime())->format('Y-m-d'));
             }
         }
+        // gestion modif Patch
+        if($invoice instanceof Invoice && $method === "PATCH"){
+            $date = new \DateTime($invoice->getSentAt());
+            $invoice->setSentAt($date->format('Y-m-d'));
+        }
     }
 }
